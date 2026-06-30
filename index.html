@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الأستاذ بيتر يونان التعليمية</title>
+    <!-- خطوط Google Fonts الاحترافية -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- مكتبة أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            /* خلفية المنصة الداكنة الفخمة */
+            --bg-card: #151c2c;
+            /* خلفية الكروت والأقسام */
+            --primary-gold: #ffb800;
+            /* اللون الذهبي المميز للأزرار والاتساق */
+            --vodafone-purple: #e60000;
+            /* أحمر فودافون أو اللون الموف للمحافظ */
+            --text-white: #ffffff;
+            --text-gray: #94a3b8;
+            --border-color: #222f47;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            overflow-x: hidden;
+        }
+
+        /* شريط التنقل (Navbar) */
+        header {
+            background-color: rgba(21, 28, 44, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 18px 8%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--text-white);
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: var(--primary-gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--primary-gold);
+        }
+
+        /* البانر الرئيسي (Hero Section) */
+        .hero-section {
+            padding: 80px 5% 120px 5%;
+            text-align: center;
+            background: radial-gradient(circle at top, #1e293b 0%, var(--bg-main) 70%);
+            position: relative;
+        }
+
+        .hero-section h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--text-white);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-section p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .hero-badge {
+            background: rgba(255, 184, 0, 0.1);
+            color: var(--primary-gold);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 184, 0, 0.2);
+        }
+
+        /* كارت تعريفي طاير للمدرس */
+        .teacher-card {
+            background-color: var(--bg-card);
+            max-width: 900px;
+            margin: -60px auto 60px auto;
+            padding: 30px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 10;
+        }
+
+        .teacher-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, #fa1 100%);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 900;
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.4);
+            flex-shrink: 0;
+        }
+
+        .teacher-info h2 {
+            font-size: 1.4rem;
+            color: var(--text-white);
+            margin-bottom: 8px;
+        }
+
+        .teacher-info p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* حاويات الأقسام */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-right: 4px solid var(--primary-gold);
+            padding-right: 15px;
+        }
+
+        .grid-lectures {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* كروت المحاضرات */
+        .lecture-card {
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lecture-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 184, 0, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .lecture-thumbnail {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .lecture-thumbnail i.play-icon {
+            font-size: 3rem;
+            color: var(--primary-gold);
+            opacity: 0.8;
+            transition: transform 0.3s ease;
+        }
+
+        .lecture-card:hover .lecture-thumbnail i.play-icon {
+            transform: scale(1.15);
+            opacity: 1;
+        }
+
+        .lecture-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-gold);
+            backdrop-filter: blur(5px);
+        }
+
+        .lecture-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .lecture-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 10px;
+        }
+
+        .lecture-desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .lecture-action-btn {
+            background-color: var(--primary-gold);
+            color: #000000;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .lecture-action-btn:hover {
+            background-color: #fa1;
+            box-shadow: 0 5px 15px rgba(255, 184, 0, 0.3);
+        }
+
+        /* قسم أسعار الاشتراكات */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .pricing-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 184, 0, 0.2);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--primary-gold);
+            box-shadow: 0 10px 30px rgba(255, 184, 0, 0.15);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary-gold) 0%, #ff8800 100%);
+            color: #000;
+            padding: 4px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(255, 184, 0, 0.3);
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-white);
+        }
+
+        .plan-price {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--primary-gold);
+            margin-bottom: 10px;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 25px 0 35px 0;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .plan-features li {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-features li i {
+            color: #10b981;
+            font-size: 1rem;
+        }
+
+        .pricing-btn {
+            background-color: transparent;
+            color: var(--text-white);
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-btn:hover {
+            background-color: rgba(255, 184, 0, 0.1);
+            border-color: var(--primary-gold);
+            color: var(--primary-gold);
+        }
+
+        .pricing-card.popular .pricing-btn {
+            background-color: var(--primary-gold);
+            color: #000;
+            border: none;
+        }
+
+        .pricing-card.popular .pricing-btn:hover {
+            background-color: #fa1;
+            box-shadow: 0 5px 15px rgba(255, 184, 0, 0.3);
+        }
+
+        /* 🔴 قسم فودافون كاش الجديد 🔴 */
+        .payment-section {
+            background-color: var(--bg-card);
+            border: 1px solid #dc2626;
+            /* إطار أحمر خفيف يعبر عن فودافون */
+            border-radius: 24px;
+            padding: 35px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.05);
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .payment-header img {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+        }
+
+        .payment-header h3 {
+            font-size: 1.4rem;
+            color: var(--text-white);
+        }
+
+        .payment-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .wallet-number-box {
+            background: linear-gradient(135deg, #220000 0%, #111827 100%);
+            border: 2px dashed #dc2626;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .wallet-label {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .wallet-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary-gold);
+            letter-spacing: 2px;
+        }
+
+        .payment-instructions {
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .payment-instructions h4 {
+            font-size: 1.05rem;
+            color: var(--text-white);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .payment-instructions ol {
+            padding-right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .payment-instructions ol li span {
+            color: var(--primary-gold);
+            font-weight: 600;
+        }
+
+        /* التوافق مع شاشات الموبايل */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 5%;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .teacher-card {
+                flex-direction: column;
+                text-align: center;
+                margin: -40px 20px 40px 20px;
+                padding: 20px;
+            }
+
+            .wallet-number {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- القائمة العلوية -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">منصة الأستاذ <span>بيتر يونان</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">الرئيسية</a></li>
+                    <li><a href="#lectures">المحاضرات المرئية</a></li>
+                    <li><a href="#">المذكرات والملخصات</a></li>
+                    <li><a href="#pricing">أسعار الاشتراكات</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- البانر الرئيسي الفخم -->
+    <section class="hero-section">
+        <span class="hero-badge">ENG \ KERO يقدم</span>
+        <h1>منصة الأستاذ بيتر يونان التعليمية</h1>
+        <p>طريقك الثابت نحو قمة التفوق والتميز في مادة الرياضيات للمراحل التعليمية بأسلوب العصر الحديث.</p>
+    </section>
+
+    <!-- الكارت التعريفي -->
+    <div class="teacher-card">
+        <div class="teacher-avatar">ب</div>
+        <div class="teacher-info">
+            <h2>أهلاً بكم يا شباب في رحلة التفوق 👋</h2>
+            <p>أنا الأستاذ بيتر يونان، معلم خبير بمادة الرياضيات للمرحلة الإعدادية والابتدائية. هدفنا في هذه المنصة ليس
+                مجرد الشرح، بل تبسيط الرياضيات تماماً ومساعدتكم على تقفيل الامتحان بكل سهولة وثقة.</p>
+        </div>
+    </div>
+
+    <!-- قسم المحاضرات -->
+    <main class="content-container" id="lectures">
+        <h2 class="section-header"><i class="fa-solid fa-play-circle" style="color: var(--primary-gold);"></i> أحدث
+            المحاضرات المتاحة</h2>
+
+        <div class="grid-lectures">
+            <!-- كارت المحاضرة الأول -->
+            <div class="card lecture-card">
+                <div class="lecture-thumbnail">
+                    <span class="lecture-tag">مراجعة شاملة</span>
+                    <i class="fa-solid fa-circle-play play-icon"></i>
+                </div>
+                <div class="lecture-body">
+                    <h3 class="lecture-title">المحاضرة الأولى: مراجعة الجبر</h3>
+                    <p class="lecture-desc">شرح تفصيلي ومبسط لجميع قوانين الجبر وحل أهم الأسئلة المتوقعة في الامتحان
+                        النهائي بالنظام الجديد.</p>
+                    <a href="#" class="lecture-action-btn">شاهد المحاضرة الآن <i class="fa-solid fa-arrow-left"></i></a>
+                </div>
+            </div>
+
+            <!-- كارت المحاضرة الثاني -->
+            <div class="card lecture-card">
+                <div class="lecture-thumbnail">
+                    <span class="lecture-tag">النظام الحديث</span>
+                    <i class="fa-solid fa-circle-play play-icon"></i>
+                </div>
+                <div class="lecture-body">
+                    <h3 class="lecture-title">المحاضرة الثانية: حساب المثلثات</h3>
+                    <p class="lecture-desc">حل عقدة حساب المثلثات تماماً في ساعة واحدة فقط، مع أفكار وتطبيقات عملية
+                        متطورة جداً.</p>
+                    <a href="#" class="lecture-action-btn">شاهد المحاضرة الآن <i class="fa-solid fa-arrow-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 💰 قسم أسعار الاشتراكات المطور 💰 -->
+    <section class="content-container" id="pricing">
+        <h2 class="section-header"><i class="fa-solid fa-credit-card" style="color: var(--primary-gold);"></i> باقات
+            وأسعار الاشتراكات</h2>
+
+        <div class="pricing-grid">
+
+            <!-- باقة الشهر الواحد -->
+            <div class="pricing-card">
+                <h3 class="plan-name">الاشتراك الشهري</h3>
+                <div class="plan-price">150 <span>ج.م / شهرياً</span></div>
+                <ul class="plan-features">
+                    <li><i class="fa-solid fa-circle-check"></i> فتح جميع محاضرات الشهر الحالية</li>
+                    <li><i class="fa-solid fa-circle-check"></i> تحميل مذكرات الشرح والواجب PDF</li>
+                    <li><i class="fa-solid fa-circle-check"></i> اختبارات دورية بعد كل محاضرة</li>
+                    <li><i class="fa-solid fa-circle-check"></i> الدعم الفني والإجابة على الأسئلة</li>
+                </ul>
+                <a href="#payment-box" class="pricing-btn">طريقة الدفع <i class="fa-solid fa-wallet"
+                        style="margin-right: 5px;"></i></a>
+            </div>
+
+            <!-- باقة الترم الكامل (الأكثر مبيعاً) -->
+            <div class="pricing-card popular">
+                <div class="popular-badge">الأكثر توفيراً ✨</div>
+                <h3 class="plan-name">اشتراك الترم كاملاً</h3>
+                <div class="plan-price">500 <span>ج.م / ترم واحد</span></div>
+                <ul class="plan-features">
+                    <li><i class="fa-solid fa-circle-check"></i> فتح كل محاضرات الترم من البداية للنهاية</li>
+                    <li><i class="fa-solid fa-circle-check"></i> بنك أسئلة كامل ومذكرات الشرح والمراجعة</li>
+                    <li><i class="fa-solid fa-circle-check"></i> معسكر المراجعة النهائية مجاناً</li>
+                    <li><i class="fa-solid fa-circle-check"></i> متابعة خاصة مع ولي الأمر شهرياً</li>
+                </ul>
+                <a href="#payment-box" class="pricing-btn">اشترك في الترم الآن <i class="fa-solid fa-bolt"
+                        style="margin-right: 5px;"></i></a>
+            </div>
+
+            <!-- باقة الحصة المنفردة -->
+            <div class="pricing-card">
+                <h3 class="plan-name">تذكرة محاضرة فردية</h3>
+                <div class="plan-price">40 <span>ج.م / للمحاضرة</span></div>
+                <ul class="plan-features">
+                    <li><i class="fa-solid fa-circle-check"></i> فتح المحاضرة المحددة فقط</li>
+                    <li><i class="fa-solid fa-circle-check"></i> مذكرة الواجب الخاصة بالحصة فقط</li>
+                    <li><i class="fa-solid fa-circle-check"></i> صلاحية مشاهدة لمدة 7 أيام</li>
+                </ul>
+                <a href="#payment-box" class="pricing-btn">شراء الحصة <i class="fa-solid fa-ticket"
+                        style="margin-right: 5px;"></i></a>
+            </div>
+
+        </div>
+
+        <!-- 🔴 تفاصيل فودافون كاش 🔴 -->
+        <div class="payment-section" id="payment-box">
+            <div class="payment-header">
+                <i class="fa-solid fa-mobile-screen-button" style="color: #dc2626; font-size: 1.8rem;"></i>
+                <h3>طريقة الدفع عبر فودافون كاش (Vodafone Cash)</h3>
+            </div>
+
+            <div class="payment-container">
+                <!-- المربع اللي هتحط فيه رقمك -->
+                <div class="wallet-number-box">
+                    <p class="wallet-label">رقم محفظة فودافون كاش المعتمد للمنصة:</p>
+                    <!-- امسح الـ 01210253306 وحط رقمك هنا -->
+                    <p class="wallet-number">01210253306</p>
+                </div>
+
+                <div class="payment-instructions">
+                    <h4><i class="fa-solid fa-circle-info" style="color: var(--primary-gold);"></i> خطوات تفعيل الاشتراك
+                        بعد الدفع:</h4>
+                    <ol>
+                        <li>قم بتحويل قيمة الباقة المختارة إلى الرقم الموضح بالأعلى.</li>
+                        <li>قم بأخذ <span>لقطة شاشة (Screenshot)</span> واضحة لرسالة تأكيد التحويل الناجحة.</li>
+                        <li>أرسل الصورة مع (اسم الطالب + الباقة المطلوبة) إلى رقم الدعم الفني على الواتساب لتفعيل حسابك
+                            فوراً.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
