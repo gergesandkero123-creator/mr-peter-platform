@@ -1,4 +1,4 @@
-<![CDATA[<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -13,13 +13,9 @@
     <style>
         :root {
             --bg-main: #0b0f19;
-            /* خلفية المنصة الداكنة الفخمة */
             --bg-card: #151c2c;
-            /* خلفية الكروت والأقسام */
             --primary-gold: #ffb800;
-            /* اللون الذهبي المميز للأزرار والاتساق */
             --vodafone-purple: #e60000;
-            /* أحمر فودافون أو اللون الموف للمحافظ */
             --text-white: #ffffff;
             --text-gray: #94a3b8;
             --border-color: #222f47;
@@ -39,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* شريط التنقل (Navbar) */
         header {
             background-color: rgba(21, 28, 44, 0.85);
             backdrop-filter: blur(10px);
@@ -86,7 +81,6 @@
             color: var(--primary-gold);
         }
 
-        /* البانر الرئيسي (Hero Section) */
         .hero-section {
             padding: 80px 5% 120px 5%;
             text-align: center;
@@ -121,7 +115,6 @@
             border: 1px solid rgba(255, 184, 0, 0.2);
         }
 
-        /* كارت تعريفي طاير للمدرس */
         .teacher-card {
             background-color: var(--bg-card);
             max-width: 900px;
@@ -164,7 +157,6 @@
             line-height: 1.7;
         }
 
-        /* حاويات الأقسام */
         .content-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -188,7 +180,6 @@
             gap: 30px;
         }
 
-        /* كروت المحاضرات */
         .lecture-card {
             background-color: var(--bg-card);
             border-radius: 20px;
@@ -284,7 +275,6 @@
             box-shadow: 0 5px 15px rgba(255, 184, 0, 0.3);
         }
 
-        /* قسم أسعار الاشتراكات */
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -400,7 +390,6 @@
             box-shadow: 0 5px 15px rgba(255, 184, 0, 0.3);
         }
 
-        /* 🔴 قسم فودافون كاش الجديد 🔴 */
         .payment-section {
             background-color: var(--bg-card);
             border: 1px solid #dc2626;
@@ -485,7 +474,6 @@
             font-weight: 600;
         }
 
-        /* التوافق مع شاشات الموبايل */
         @media (max-width: 768px) {
             header {
                 padding: 15px 5%;
@@ -516,7 +504,6 @@
 
 <body>
 
-    <!-- القائمة العلوية -->
     <header>
         <div class="nav-container">
             <div class="logo">منصة الأستاذ <span>بيتر يونان</span></div>
@@ -532,14 +519,12 @@
         </div>
     </header>
 
-    <!-- البانر الرئيسي الفخم -->
     <section class="hero-section">
         <span class="hero-badge">ENG \ KERO يقدم</span>
         <h1>منصة الأستاذ بيتر يونان التعليمية</h1>
         <p>طريقك الثابت نحو قمة التفوق والتميز في مادة الرياضيات للمراحل التعليمية بأسلوب العصر الحديث.</p>
     </section>
 
-    <!-- الكارت التعريفي -->
     <div class="teacher-card">
         <div class="teacher-avatar">ب</div>
         <div class="teacher-info">
@@ -549,13 +534,26 @@
         </div>
     </div>
 
-    <!-- قسم المحاضرات -->
-    <main class="content-container" id="lectures">
+    <!-- رسالة حالة الحساب (Pending / غير مفعل) -->
+    <div class="content-container" id="pending-message" style="display: none;">
+        <div class="teacher-card" style="text-align: center; justify-content: center; flex-direction: column;">
+            <i class="fa-solid fa-clock" style="font-size: 3rem; color: var(--primary-gold); margin-bottom: 15px;"></i>
+            <h2 style="font-size: 1.6rem; margin-bottom: 10px;">حسابك قيد المراجعة ⏳</h2>
+            <p style="color: var(--text-gray); font-size: 1rem; max-width: 500px; margin: 0 auto;">
+                Please pay the subscription and contact us on WhatsApp to activate your account.
+            </p>
+            <a href="#payment-box" class="pricing-btn" style="margin-top: 20px; display: inline-block; padding: 12px 30px;">
+                طريقة الدفع <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- قسم المحاضرات (مخفي في البداية، يظهر فقط لو الحالة active) -->
+    <main class="content-container" id="lectures-section" style="display: none;">
         <h2 class="section-header"><i class="fa-solid fa-play-circle" style="color: var(--primary-gold);"></i> أحدث
             المحاضرات المتاحة</h2>
 
         <div class="grid-lectures">
-            <!-- كارت المحاضرة الأول -->
             <div class="card lecture-card">
                 <div class="lecture-thumbnail">
                     <span class="lecture-tag">مراجعة شاملة</span>
@@ -569,7 +567,6 @@
                 </div>
             </div>
 
-            <!-- كارت المحاضرة الثاني -->
             <div class="card lecture-card">
                 <div class="lecture-thumbnail">
                     <span class="lecture-tag">النظام الحديث</span>
@@ -585,14 +582,12 @@
         </div>
     </main>
 
-    <!-- 💰 قسم أسعار الاشتراكات المطور 💰 -->
     <section class="content-container" id="pricing">
         <h2 class="section-header"><i class="fa-solid fa-credit-card" style="color: var(--primary-gold);"></i> باقات
             وأسعار الاشتراكات</h2>
 
         <div class="pricing-grid">
 
-            <!-- باقة الشهر الواحد -->
             <div class="pricing-card">
                 <h3 class="plan-name">الاشتراك الشهري</h3>
                 <div class="plan-price">150 <span>ج.م / شهرياً</span></div>
@@ -606,7 +601,6 @@
                         style="margin-right: 5px;"></i></a>
             </div>
 
-            <!-- باقة الترم الكامل (الأكثر مبيعاً) -->
             <div class="pricing-card popular">
                 <div class="popular-badge">الأكثر توفيراً ✨</div>
                 <h3 class="plan-name">اشتراك الترم كاملاً</h3>
@@ -621,7 +615,6 @@
                         style="margin-right: 5px;"></i></a>
             </div>
 
-            <!-- باقة الحصة المنفردة -->
             <div class="pricing-card">
                 <h3 class="plan-name">تذكرة محاضرة فردية</h3>
                 <div class="plan-price">40 <span>ج.م / للمحاضرة</span></div>
@@ -636,7 +629,6 @@
 
         </div>
 
-        <!-- 🔴 تفاصيل فودافون كاش 🔴 -->
         <div class="payment-section" id="payment-box">
             <div class="payment-header">
                 <i class="fa-solid fa-mobile-screen-button" style="color: #dc2626; font-size: 1.8rem;"></i>
@@ -644,10 +636,8 @@
             </div>
 
             <div class="payment-container">
-                <!-- المربع اللي هتحط فيه رقمك -->
                 <div class="wallet-number-box">
                     <p class="wallet-label">رقم محفظة فودافون كاش المعتمد للمنصة:</p>
-                    <!-- امسح الـ 01210253306 وحط رقمك هنا -->
                     <p class="wallet-number">01210253306</p>
                 </div>
 
@@ -665,6 +655,106 @@
         </div>
     </section>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOHbnkOxnmdPvZh9a4nrSmWB7HtNOVQXQ",
+            authDomain: "mr-peter-platform.firebaseapp.com",
+            projectId: "mr-peter-platform",
+            storageBucket: "mr-peter-platform.firebasestorage.app",
+            messagingSenderId: "753078677057",
+            appId: "1:753078677057:web:1d2df6363aba8f3fd220c0",
+            measurementId: "G-839N580RRJ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const lecturesSection = document.getElementById('lectures-section');
+        const pendingMessage = document.getElementById('pending-message');
+
+        // متغير لحفظ حالة المستخدم (active/pending) لاستخدامها في أزرار المحاضرات
+        let currentUserStatus = null;
+
+        // دالة للتحقق من حالة المستخدم والتحكم في ظهور المحاضرات
+        async function checkUserStatus(uid) {
+            const lectureCards = document.querySelectorAll('.lecture-card');
+            const lectureButtons = document.querySelectorAll('.lecture-action-btn');
+
+            try {
+                // جلب بيانات المستخدم من Firestore باستخدام UID المستلم
+                const userDocRef = doc(db, "users", uid);
+                const userDocSnap = await getDoc(userDocRef);
+
+                if (userDocSnap.exists()) {
+                    const userData = userDocSnap.data();
+                    const subscriptionStatus = userData.subscriptionStatus;
+                    currentUserStatus = subscriptionStatus;
+
+                    if (subscriptionStatus === "active") {
+                        // إظهار قسم المحاضرات وإخفاء رسالة الانتظار
+                        lecturesSection.style.display = "block";
+                        pendingMessage.style.display = "none";
+                        // إظهار كل عناصر المحاضرات
+                        lectureCards.forEach(card => {
+                            card.style.display = "flex";
+                        });
+                    } else {
+                        // إخفاء قسم المحاضرات وإظهار رسالة الانتظار
+                        lecturesSection.style.display = "none";
+                        pendingMessage.style.display = "block";
+                        // إخفاء كل عناصر المحاضرات
+                        lectureCards.forEach(card => {
+                            card.style.display = "none";
+                        });
+                    }
+                } else {
+                    // المستخدم غير موجود في Firestore → إخفاء المحاضرات وإظهار رسالة الانتظار
+                    lecturesSection.style.display = "none";
+                    pendingMessage.style.display = "block";
+                    lectureCards.forEach(card => {
+                        card.style.display = "none";
+                    });
+                }
+            } catch (error) {
+                console.error("خطأ في قراءة حالة المستخدم:", error);
+                // في حالة حدوث خطأ، نخفي المحاضرات احتياطياً ونظهر رسالة الانتظار
+                lecturesSection.style.display = "none";
+                pendingMessage.style.display = "block";
+                lectureCards.forEach(card => {
+                    card.style.display = "none";
+                });
+            }
+
+            // حماية أزرار "شاهد المحاضرة الآن" - تعمل فقط للمستخدمين النشطين
+            lectureButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (currentUserStatus !== "active") {
+                        e.preventDefault();
+                        // توجيه المستخدم غير النشط إلى قسم الدفع
+                        document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
+                    }
+                    // لو المستخدم نشط، الزر يعمل بشكل طبيعي (ينفذ الـ href)
+                });
+            });
+        }
+
+        // استماع لحالة تسجيل الدخول - يضمن أن Firebase يعرف هوية المستخدم قبل قراءة UID
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // المستخدم مسجل دخوله → ننفذ checkUserStatus مع UID المستخدم
+                checkUserStatus(user.uid);
+            } else {
+                // مش مسجل دخول → نوجهه لصفحة تسجيل الدخول
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+
 </body>
 
-</html>]]>
+</html>

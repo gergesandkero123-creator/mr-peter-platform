@@ -108,6 +108,7 @@
                     <th>البريد الإلكتروني</th>
                     <th>حالة الاشتراك</th>
                     <th>التحكم بالنظام</th>
+                    <th>الاشتراك</th>
                 </tr>
             </thead>
             <tbody id="students-table">
@@ -151,6 +152,14 @@
                 const btnClass = isControlActive ? "btn-deactivate" : "btn-activate";
                 const nextStatus = isControlActive ? "pending" : "active";
 
+                // تحديد نصوص أزرار الاشتراك
+                const isSubActive = student.subscriptionStatus === "active";
+                const subStatusText = isSubActive ? "مفعل" : "غير مفعل";
+                const subStatusClass = isSubActive ? "status-active" : "status-pending";
+                const subBtnText = isSubActive ? "إلغاء الاشتراك" : "تفعيل الاشتراك";
+                const subBtnClass = isSubActive ? "btn-deactivate" : "btn-activate";
+                const nextSubStatus = isSubActive ? "pending" : "active";
+
                 tr.innerHTML = `
                 <td>${student.name || 'بدون اسم'}</td>
                 <td>${student.email}</td>
@@ -158,6 +167,12 @@
                 <td>
                     <button class="btn ${btnClass}" onclick="toggleStudentStatus('${student.uid}', '${nextStatus}')">
                         ${btnText}
+                    </button>
+                </td>
+                <td>
+                    <span class="status ${subStatusClass}" style="display: block; margin-bottom: 6px;">${subStatusText}</span>
+                    <button class="btn ${subBtnClass}" onclick="toggleSubscriptionStatus('${student.uid}', '${nextSubStatus}')">
+                        ${subBtnText}
                     </button>
                 </td>
             `;
@@ -175,6 +190,19 @@
                 alert("تم تحديث حالة الطالب بنجاح!");
             } catch (error) {
                 alert("حدث خطأ أثناء التحديث: " + error.message);
+            }
+        }
+
+        // دالة تفعيل/إلغاء الاشتراك - تحديث subscriptionStatus في Firestore
+        window.toggleSubscriptionStatus = async function (uid, newSubStatus) {
+            try {
+                const studentRef = doc(db, "users", uid);
+                await updateDoc(studentRef, {
+                    subscriptionStatus: newSubStatus
+                });
+                alert("تم تحديث حالة الاشتراك بنجاح!");
+            } catch (error) {
+                alert("حدث خطأ أثناء تحديث الاشتراك: " + error.message);
             }
         }
     </script>
