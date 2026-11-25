@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المنصة | كيرلس سامح</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #ff9800;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #262626;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        th {
+            background-color: #ff9800;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        tr:hover {
+            background-color: #2f2f2f;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-activate {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn-activate:hover {
+            background-color: #45a049;
+        }
+
+        .btn-deactivate {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-deactivate:hover {
+            background-color: #da190b;
+        }
+
+        .status {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .status-active {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .status-pending {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>لوحة تحكم الطلاب (الـ Admin) 👑</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>اسم الطالب</th>
+                    <th>البريد الإلكتروني</th>
+                    <th>حالة الاشتراك</th>
+                    <th>التحكم بالنظام</th>
+                    <th>الاشتراك</th>
+                </tr>
+            </thead>
+            <tbody id="students-table">
+            </tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // الكود السري بتاعك
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOHbnkOxnmdPvZh9a4nrSmWB7HtNOVQXQ",
+            authDomain: "mr-peter-platform.firebaseapp.com",
+            projectId: "mr-peter-platform",
+            storageBucket: "mr-peter-platform.firebasestorage.app",
+            messagingSenderId: "753078677057",
+            appId: "1:753078677057:web:1d2df6363aba8f3fd220c0",
+            measurementId: "G-839N580RRJ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // قراءة الطلاب من قاعدة البيانات لحظة بلحظة (Realtime)
+        onSnapshot(collection(db, "users"), (snapshot) => {
+            const tableBody = document.getElementById('students-table');
+            tableBody.innerHTML = ""; // تصفية الجدول قبل التحديث
+
+            snapshot.forEach((docSnap) => {
+                const student = docSnap.data();
+
+                const tr = document.createElement('tr');
+
+                // تحديد نصوص الأزرار والحالة على حسب وضع الطالب الحالي
+                const isControlActive = student.status === "active";
+                const statusText = isControlActive ? "مفعل" : "غير مفعل";
+                const statusClass = isControlActive ? "status-active" : "status-pending";
+                const btnText = isControlActive ? "إلغاء التفعيل" : "تفعيل الحساب";
+                const btnClass = isControlActive ? "btn-deactivate" : "btn-activate";
+                const nextStatus = isControlActive ? "pending" : "active";
+
+                // تحديد نصوص أزرار الاشتراك
+                const isSubActive = student.subscriptionStatus === "active";
+                const subStatusText = isSubActive ? "مفعل" : "غير مفعل";
+                const subStatusClass = isSubActive ? "status-active" : "status-pending";
+                const subBtnText = isSubActive ? "إلغاء الاشتراك" : "تفعيل الاشتراك";
+                const subBtnClass = isSubActive ? "btn-deactivate" : "btn-activate";
+                const nextSubStatus = isSubActive ? "pending" : "active";
+
+                tr.innerHTML = `
+                <td>${student.name || 'بدون اسم'}</td>
+                <td>${student.email}</td>
+                <td><span class="status ${statusClass}">${statusText}</span></td>
+                <td>
+                    <button class="btn ${btnClass}" onclick="toggleStudentStatus('${student.uid}', '${nextStatus}')">
+                        ${btnText}
+                    </button>
+                </td>
+                <td>
+                    <span class="status ${subStatusClass}" style="display: block; margin-bottom: 6px;">${subStatusText}</span>
+                    <button class="btn ${subBtnClass}" onclick="toggleSubscriptionStatus('${student.uid}', '${nextSubStatus}')">
+                        ${subBtnText}
+                    </button>
+                </td>
+            `;
+                tableBody.appendChild(tr);
+            });
+        });
+
+        // دالة التفعيل والتعطيل بضغطة زرار
+        window.toggleStudentStatus = async function (uid, newStatus) {
+            try {
+                const studentRef = doc(db, "users", uid);
+                await updateDoc(studentRef, {
+                    status: newStatus
+                });
+                alert("تم تحديث حالة الطالب بنجاح!");
+            } catch (error) {
+                alert("حدث خطأ أثناء التحديث: " + error.message);
+            }
+        }
+
+        // دالة تفعيل/إلغاء الاشتراك - تحديث subscriptionStatus في Firestore
+        window.toggleSubscriptionStatus = async function (uid, newSubStatus) {
+            try {
+                const studentRef = doc(db, "users", uid);
+                await updateDoc(studentRef, {
+                    subscriptionStatus: newSubStatus
+                });
+                alert("تم تحديث حالة الاشتراك بنجاح!");
+            } catch (error) {
+                alert("حدث خطأ أثناء تحديث الاشتراك: " + error.message);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
